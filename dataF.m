@@ -1,5 +1,6 @@
 clc
-clear
+% clear
+clearvars -except sys
 close all 
 
 path = "data-f/";
@@ -21,22 +22,33 @@ leftAirFlow=readmatrix(path+'left-air-flow.txt');
 rightAirFlow=readmatrix(path+'right-air-flow.txt');
 
 
+feedWater=(feedWaterFlowA+feedWaterFlowB)/2;
+furnance=(furnanceA(1:length(furnanceB))+ furnanceB)/2;
+u=[{feedWater(1:length(oxygen))}, {furnanceMaster(1:length(oxygen))}, {furnance(1:length(oxygen))}];
 
-plotVariable(load)
-plotVariable(oxygen)
-plotVariable(feedWaterFlowA)
-plotVariable(feedWaterFlowB)
-plotVariable(furnanceMaster)
-plotVariable(furnanceA)
-plotVariable(furnanceB)
-plotVariable(steamFlow)
-plotVariable(steamPressure)
-plotVariable(steamTemp)
-plotVariable(drumPR1)
-plotVariable(drumPR2)
-plotVariable(drumLVL)
-plotVariable(leftAirFlow)
-plotVariable(rightAirFlow)
+drumPR=(drumPR1(1:length(oxygen))+drumPR2(1:length(oxygen)))/2; 
+y=[{drumLVL(1:length(oxygen))}, {oxygen(1:length(oxygen))}, {drumPR(1:length(oxygen))}];
+
+dataModel = iddata(y,u,1);
+
+compare(dataModel,sys,2)
+
+
+% plotVariable(load)
+% plotVariable(oxygen)
+% plotVariable(feedWaterFlowA)
+% plotVariable(feedWaterFlowB)
+% plotVariable(furnanceMaster)
+% plotVariable(furnanceA)
+% plotVariable(furnanceB)
+% plotVariable(steamFlow)
+% plotVariable(steamPressure)
+% plotVariable(steamTemp)
+% plotVariable(drumPR1)
+% plotVariable(drumPR2)
+% plotVariable(drumLVL)
+% plotVariable(leftAirFlow)
+% plotVariable(rightAirFlow)
 
 
 % plotTwoVariables(drumPR1,drumPR2);
@@ -48,11 +60,11 @@ plotVariable(rightAirFlow)
 % plotVariable(furnanceA);
 % plotVariable(feedWaterFlowA);
 
-plotVariable(furnanceMaster);
-plotVariable(drumLVL);
-
-plotVariable(oxygen);
-plotVariable(load);
+% plotVariable(furnanceMaster);
+% plotVariable(drumLVL);
+% 
+% plotVariable(oxygen);
+% plotVariable(load);
 % 
 
 

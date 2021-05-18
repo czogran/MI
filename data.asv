@@ -22,40 +22,30 @@ rightAirFlow=readmatrix(path+'right-air-flow.txt');
 
 % ZMIENNE WAŻNE
 % u
-% (feedWaterFlowA+feedWaterFlowB)/2 furnanceMaster (furnanceA furnanceB)/2
+% (feedWaterFlowA+feedWaterFlowB)/2 furnanceMaster furnanceA furnanceB
 % (rightAirFlow+leftAirFlow)/2  
 % y
 % drumLVL oxygen (drumPR1+drumPR2)/2   
 % ZMIENNE POMINIĘTE
-% load steamFlow steamPreasure steamTemp 
+% load, ste
 
-feedWater=(feedWaterFlowA+feedWaterFlowB)/2;
-furnance=(furnanceA+ furnanceB)/2;
-u=[{feedWater}, {furnanceMaster}, {furnance}];
+u=[]
 
-drumPR=(drumPR1+drumPR2)/2; 
-y=[{drumLVL}, {oxygen}, {drumPR}];
-
-dataModel = iddata(y,u,1);
-
-sys = arx(dataModel,[2 2 1])
-
-compare(dataModel,sys,2)
-% plotVariable(load)
-% plotVariable(oxygen)
-% plotVariable(feedWaterFlowA)
-% plotVariable(feedWaterFlowB)
+plotVariable(load)
+plotVariable(oxygen)
+plotVariable(feedWaterFlowA)
+plotVariable(feedWaterFlowB)
 plotVariable(furnanceMaster)
-% plotVariable(furnanceA)
-% plotVariable(furnanceB)
-% plotVariable(steamFlow)
-% plotVariable(steamPressure)
-% plotVariable(steamTemp)
-% plotVariable(drumPR1)
-% plotVariable(drumPR2)
-% plotVariable(drumLVL)
-% plotVariable(leftAirFlow)
-% plotVariable(rightAirFlow)
+plotVariable(furnanceA)
+plotVariable(furnanceB)
+plotVariable(steamFlow)
+plotVariable(steamPressure)
+plotVariable(steamTemp)
+plotVariable(drumPR1)
+plotVariable(drumPR2)
+plotVariable(drumLVL)
+plotVariable(leftAirFlow)
+plotVariable(rightAirFlow)
 
 
 % plotTwoVariables(drumPR1,drumPR2);

@@ -21,6 +21,24 @@ leftAirFlow=readmatrix(path+'left-air-flow.txt');
 rightAirFlow=readmatrix(path+'right-air-flow.txt');
 
 
+path = "data-a/";
+
+loadA=readmatrix(path+'load.txt');
+oxygenA=readmatrix(path+'oxygen.txt');
+feedWaterFlowAA=readmatrix(path+'feedwater-flow-A.txt');
+feedWaterFlowBA=readmatrix(path+'feedwater-flow-B.txt');
+furnanceMasterA=readmatrix(path+'furnance-master.txt');
+furnanceAA=readmatrix(path+'furnance-A.txt');
+furnanceBA=readmatrix(path+'furnance-B.txt');
+steamFlowA=readmatrix(path+'steam-flow.txt');
+steamPressureA=readmatrix(path+'steam-pressure.txt');
+steamTempA=readmatrix(path+'steam-temp.txt');
+drumPR1A=readmatrix(path+'drum-PR1.txt');
+drumPR2A=readmatrix(path+'drum-PR2.txt');
+drumLVLA=readmatrix(path+'drum-LVL.txt');
+leftAirFlowA=readmatrix(path+'left-air-flow.txt');
+rightAirFlowA=readmatrix(path+'right-air-flow.txt');
+
 
 path = "data-f/";
 
@@ -40,47 +58,72 @@ drumLVLF=readmatrix(path+'drum-LVL.txt');
 leftAirFlowF=readmatrix(path+'left-air-flow.txt');
 rightAirFlowF=readmatrix(path+'right-air-flow.txt');
 
+furnAll=[furnanceMasterA; furnanceMaster; furnanceMasterF];
+loadAll=[loadA;load;loadF];
+drumLVLAll=[drumLVLA; drumLVL; drumLVLF];
+feedWaterFlowAAll=[feedWaterFlowAA;feedWaterFlowA;feedWaterFlowAF];
+oxygenAll=[oxygenA; oxygen; oxygenF];
+rightAirFlowAll=[rightAirFlowA; rightAirFlow; rightAirFlowF];
+leftAirFlowAll=[leftAirFlowA; leftAirFlow; leftAirFlowF];
+drumPR1All = [drumPR1A; drumPR1; drumPR1F];
+drumPR2All = [drumPR2A; drumPR2; drumPR2F];
 
 
-% plotVariable(load)
-% plotVariable(oxygen)
-% plotVariable(feedWaterFlowA)
-% plotVariable(feedWaterFlowB)
-% plotVariable(furnanceMaster)
-% plotVariable(furnanceA)
-% plotVariable(furnanceB)
-% plotVariable(steamFlow)
-% plotVariable(steamPressure)
-% plotVariable(steamTemp)
-% plotVariable(drumPR1)
-% plotVariable(drumPR2)
-% plotVariable(drumLVL)
-% plotVariable(leftAirFlow)
-% plotVariable(rightAirFlow)
 
-drumLVLEF=[drumLVL; drumLVLF];
-funMEF=[furnanceMaster; furnanceMasterF];
-loadEF=[load; loadF];
-plotVariable(funMEF);
-plotVariable(furnanceMaster);
-plotVariable(loadEF);
-plotVariable(drumLVLEF);
+plotVariable(furnAll);
+% plotVariable(loadAll);
+% plotVariable(drumLevelAll);
+% plotVariable(leftAirFlowAll);
+% plotVariable(oxygenAll);
+% plotVariable(rightAirFlowAll);
+% plotVariable(drumPR1All);
+plotVariable(feedWaterFlowAAll);
 
-% plotTwoVariables(drumPR1,drumPR2);
-% plotTwoVariables(leftAirFlow,rightAirFlow);
+drumLVLAll=circshift(drumLVLAll,-200)+310;
+drumLVLAll=drumLVLAll(1:end-200);
+variable1=feedWaterFlowAAll;
+variable2=drumLVLAll;
+amount=min([length(variable1),length(variable2)]);
+a=corrcoef(variable1(1:amount),variable2(1:amount))
+
+plotVariable(drumLVLAll);
+
+plotTwoVariables(drumLVLAll, feedWaterFlowAAll);
+
+
+
+
+
+% drumLVLEF=[drumLVL; drumLVLF];
+% oxygenEF=[oxygen; oxygenF];
+% funMEF=[furnanceMaster; furnanceMasterF];
+% furnA=[furnanceA; furnanceAF];
+% loadEF=[load; loadF];
+% steamEF=[steamFlow; steamFlowF];
+% feedWater =[feedWaterFlowA; feedWaterFlowAF];
+% plotVariable(funMEF);
+% plotVariable(loadEF);
+% plotVariable(drumLVLEF);
+% plotVariable(feedWater);
+% plotVariable(oxygenEF);
+% plotVariable(steamEF);
+% plotVariable(furnA);
 % 
-% % fMeam = (furnanceA+furnanceB)/2;
-% % fox=fMeam.*oxygen;
+% % plotTwoVariables(drumPR1,drumPR2);
+% % plotTwoVariables(leftAirFlow,rightAirFlow);
 % % 
-% plotVariable(furnanceA);
-% plotVariable(feedWaterFlowA);
-% 
-% plotVariable(furnanceMaster);
-% plotVariable(drumLVL);
-% 
-% plotVariable(oxygen);
-% plotVariable(load);
-% 
+% % % fMeam = (furnanceA+furnanceB)/2;
+% % % fox=fMeam.*oxygen;
+% % % 
+% % plotVariable(furnanceA);
+% % plotVariable(feedWaterFlowA);
+% % 
+% % plotVariable(furnanceMaster);
+% % plotVariable(drumLVL);
+% % 
+% % plotVariable(oxygen);
+% % plotVariable(load);
+% % 
 
 
 
