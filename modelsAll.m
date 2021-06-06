@@ -149,6 +149,9 @@ plotTwoVariables(modelPlus,drumLVLPlus)
 
 function plotVariable(variable)
     variableMean=movmean(variable,200);
+    
+
+    
     figure
     plot(variable,'c')
     hold on
@@ -156,12 +159,18 @@ function plotVariable(variable)
     title(inputname(1));
     legend(inputname(1),inputname(1)+ " mean", 'Location','best')
     hold off
+    
+    saveas(gcf,"docs/models-all/"+inputname(1)+".png")
 end
 
 function plotTwoVariables(variable1, variable2)
     variableMean1=movmean(variable1,200);
     variableMean2=movmean(variable2,200);
-convertCharsToStrings(inputname(1))
+    
+    errorLength=min([length(variableMean1),length(variableMean2)]);
+    error=immse(variableMean1(1:errorLength),variableMean2(1:errorLength));
+    
+    convertCharsToStrings(inputname(1))
     figure
     plot(variable1,'c')
     hold on
@@ -170,7 +179,11 @@ convertCharsToStrings(inputname(1))
     plot(variable2,'y')
     hold on
     plot(variableMean2,'r')
-    title(convertCharsToStrings(inputname(1))+newline+ convertCharsToStrings(inputname(2)));
+    title(convertCharsToStrings(inputname(1))+newline+ convertCharsToStrings(inputname(2))+newline+...
+          "immse:" + error);
     legend(inputname(1),inputname(1)+ " mean",inputname(2),inputname(2)+ " mean", 'Location','best')
     hold off
+    
+    saveas(gcf,"docs/models-all/"+inputname(1)+inputname(2)+".png")
+
 end
