@@ -1,9 +1,9 @@
-clc
-clear
-close all 
+
 
 path = "data/";
-
+global oxygen
+global airFlow
+global furnanceMaster
 load=readmatrix(path+'load.txt');
 oxygen=readmatrix(path+'oxygen.txt');
 feedWaterFlowA=readmatrix(path+'feedwater-flow-A.txt');
@@ -11,6 +11,8 @@ feedWaterFlowB=readmatrix(path+'feedwater-flow-B.txt');
 furnanceMaster=readmatrix(path+'furnance-master.txt');
 furnanceA=readmatrix(path+'furnance-A.txt');
 furnanceB=readmatrix(path+'furnance-B.txt');
+global steamFlow
+global drumLVL
 steamFlow=readmatrix(path+'steam-flow.txt');
 steamPressure=readmatrix(path+'steam-pressure.txt');
 steamTemp=readmatrix(path+'steam-temp.txt');
@@ -19,16 +21,16 @@ drumPR2=readmatrix(path+'drum-PR2.txt');
 drumLVL=readmatrix(path+'drum-LVL.txt');
 leftAirFlow=readmatrix(path+'left-air-flow.txt');
 rightAirFlow=readmatrix(path+'right-air-flow.txt');
-
+airFlow=(leftAirFlow+rightAirFlow)/2;
 % ZMIENNE WAŻNE
 % u
 % (feedWaterFlowA+feedWaterFlowB)/2 furnanceMaster (furnanceA furnanceB)/2
 % (rightAirFlow+leftAirFlow)/2  
 % y
 % drumLVL oxygen (drumPR1+drumPR2)/2   
-% ZMIENNE POMINIĘTE
+% ZMIENNE POMINI�?TE
 % load steamFlow steamPreasure steamTemp 
-
+global feedWater
 feedWater=(feedWaterFlowA+feedWaterFlowB)/2;
 furnance=(furnanceA+ furnanceB)/2;
 u=[{feedWater}, {furnanceMaster}, {furnance}];
@@ -41,21 +43,21 @@ dataModel = iddata(y,u,1);
 sys = arx(dataModel,[2 2 1])
 
 compare(dataModel,sys,2)
-plotVariable(load)
-plotVariable(oxygen)
-plotVariable(feedWaterFlowA)
-plotVariable(feedWaterFlowB)
+% plotVariable(load)
+% plotVariable(oxygen)
+% plotVariable(feedWaterFlowA)
+% plotVariable(feedWaterFlowB)
 plotVariable(furnanceMaster)
-plotVariable(furnanceA)
-plotVariable(furnanceB)
-plotVariable(steamFlow)
-plotVariable(steamPressure)
-plotVariable(steamTemp)
-plotVariable(drumPR1)
-plotVariable(drumPR2)
-plotVariable(drumLVL)
-plotVariable(leftAirFlow)
-plotVariable(rightAirFlow)
+% plotVariable(furnanceA)
+% plotVariable(furnanceB)
+% plotVariable(steamFlow)
+% plotVariable(steamPressure)
+% plotVariable(steamTemp)
+% plotVariable(drumPR1)
+% plotVariable(drumPR2)
+% plotVariable(drumLVL)
+% plotVariable(leftAirFlow)
+% plotVariable(rightAirFlow)
 
 
 % plotTwoVariables(drumPR1,drumPR2);

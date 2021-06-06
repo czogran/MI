@@ -1,6 +1,3 @@
-clc
-clear
-close all 
 
 path = "data/";
 
@@ -58,71 +55,48 @@ drumLVLF=readmatrix(path+'drum-LVL.txt');
 leftAirFlowF=readmatrix(path+'left-air-flow.txt');
 rightAirFlowF=readmatrix(path+'right-air-flow.txt');
 
-furnanceMasterAll=[furnanceMasterA; furnanceMaster; furnanceMasterF];
-furnPartialAAll=[furnanceAA; furnanceA; furnanceAF];
-furnPartialBAll=[furnanceBA; furnanceB; furnanceBF];
-
-
+furnAll=[furnanceMasterA; furnanceMaster; furnanceMasterF];
 loadAll=[loadA;load;loadF];
 drumLVLAll=[drumLVLA; drumLVL; drumLVLF];
-feedWaterFlowAAll=[feedWaterFlowAA;feedWaterFlowA;feedWaterFlowAF];
+global steamFlow
+steamFlow = [steamFlowA;steamFlow;steamFlowF];
+global feedWater
+feedWater=[feedWaterFlowAA;feedWaterFlowA;feedWaterFlowAF];
 oxygenAll=[oxygenA; oxygen; oxygenF];
+global oxygen
+global airFlow
+global furnanceMaster
+global drumLVL
+drumLVL = drumLVLAll;
+oxygen = oxygenAll;
+furnanceMaster = furnAll;
 rightAirFlowAll=[rightAirFlowA; rightAirFlow; rightAirFlowF];
 leftAirFlowAll=[leftAirFlowA; leftAirFlow; leftAirFlowF];
+airFlow = (leftAirFlowAll + rightAirFlowAll)/2;
 drumPR1All = [drumPR1A; drumPR1; drumPR1F];
 drumPR2All = [drumPR2A; drumPR2; drumPR2F];
-steamPreassureAll=[steamPressureA;steamPressure;steamPressureF];
-steamFlowAll=[steamFlowA;steamFlow;steamFlowF];
-
-airFlowAll=(rightAirFlowAll+leftAirFlowAll)/2;
 
 
 
-% plotVariable(furnAll);
-% plotVariable(furnPartialAAll);
-% % plotVariable(furnPartialBAll);
-% 
-% 
+plotVariable(furnAll);
 % plotVariable(loadAll);
-% % plotVariable(drumLevelAll);
+% plotVariable(drumLevelAll);
 % plotVariable(leftAirFlowAll);
 % plotVariable(oxygenAll);
 % plotVariable(rightAirFlowAll);
-% % plotVariable(drumPR1All);
-% plotVariable(steamFlowAll);
+% plotVariable(drumPR1All);
+plotVariable(feedWaterFlowAAll);
 
-% drumLVLAll=circshift(drumLVLAll,-200)+310;
-drumLVLAll=circshift(drumLVLAll,-200);
-
+drumLVLAll=circshift(drumLVLAll,-200)+310;
 drumLVLAll=drumLVLAll(1:end-200);
-helpL=min(length(feedWaterFlowAAll),length(steamFlowAll));
-variable1=(feedWaterFlowAAll(1:helpL)-steamFlowAll(1:helpL)+25)*2;
+variable1=feedWaterFlowAAll;
 variable2=drumLVLAll;
 amount=min([length(variable1),length(variable2)]);
 a=corrcoef(variable1(1:amount),variable2(1:amount))
 
-far=0.00000009;
-airq=1/40;
-len=min([length(airFlowAll),length(furnanceMasterAll)]);
-ox2=100*(airFlowAll(1:len)-furnanceMasterAll(1:len)*far)./((airFlowAll(1:len)+furnanceMasterAll(1:len))*airq);
+plotVariable(drumLVLAll);
 
-arLen=min([length(airFlowAll),length(oxygenAll)]);
-
-air3=(airFlowAll(1:arLen)-105)*0.2;
-ox3=oxygenAll(1:arLen);
-
-plotTwoVariables(air3,ox3)
-
-plotVariable(ox2)
-plotVariable(oxygenAll)
-plotVariable(airFlowAll)
-plotVariable(furnanceMasterAll)
-
-% plotVariable(drumLVLAll);
-
-plotTwoVariables(drumLVLAll, variable1);
-
-% plotTwoVariables(drumLVLAll, feedWaterFlowAAll);
+plotTwoVariables(drumLVLAll, feedWaterFlowAAll);
 
 
 
