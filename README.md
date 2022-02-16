@@ -1,2 +1,2 @@
 # MI
-Metod identyfikacjia
+Metody identyfikacji
